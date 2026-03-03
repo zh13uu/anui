@@ -2,241 +2,452 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💕 Chuyện Mục An Ủi Ly</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Chuyên Mục An Ủi Ly</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--rose:#e8415a;--blush:#f4a5b5;--gold:#d4a57a;--cream:#fff5f7;--dark:#000}
-body{background:var(--dark);min-height:100vh;overflow:hidden;font-family:'Cormorant Garamond',serif;cursor:none;display:flex;align-items:center;justify-content:center}
-.cursor{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);font-size:22px;line-height:1;color:rgba(255,255,255,0.4)}
-.bg-mesh{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 40%,rgba(123,21,53,0.4) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 60%,rgba(232,65,90,0.25) 0%,transparent 60%),linear-gradient(160deg,#0d0208 0%,#1a0510 40%,#2a0a1a 100%);z-index:0;opacity:0;transition:opacity 1.2s ease}
-body.activated .bg-mesh{opacity:1}
-.particles{position:fixed;inset:0;z-index:1;pointer-events:none}
-.particle{position:absolute;opacity:0;display:none;animation:floatUp var(--dur,6s) var(--delay,0s) infinite ease-in;left:var(--x,50%)}
-body.activated .particle{display:block}
-@keyframes floatUp{0%{transform:translateY(110vh) scale(.5) rotate(0);opacity:0}10%{opacity:.6}80%{opacity:.3}100%{transform:translateY(-10vh) scale(1.2) rotate(20deg);opacity:0}}
-.stage{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:2rem}
-.stage.shake{animation:shakeStage .45s ease}
-@keyframes shakeStage{0%,100%{transform:translate(0,0) rotate(0)}15%{transform:translate(-7px,-5px) rotate(-1.2deg)}30%{transform:translate(8px,5px) rotate(1deg)}45%{transform:translate(-5px,4px) rotate(-.6deg)}60%{transform:translate(5px,-5px) rotate(.8deg)}80%{transform:translate(-3px,2px) rotate(-.3deg)}}
-.title{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.8rem,4.5vw,3rem);text-align:center;letter-spacing:.04em;line-height:1.25;animation:fadeInDown 1.2s ease both;background:linear-gradient(90deg,rgba(255,245,247,.85),rgba(255,245,247,.85));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-body.activated .title{background:linear-gradient(90deg,var(--blush),var(--gold),var(--blush));background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:fadeInDown 1.2s ease both,shimmerMove 3s linear infinite}
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes shimmerMove{0%{background-position:200% center}100%{background-position:-200% center}}
-.subtitle{font-size:clamp(.9rem,2vw,1.2rem);font-style:italic;color:var(--blush);text-align:center;letter-spacing:.15em;opacity:0;transition:opacity 1s ease}
-body.activated .subtitle{opacity:.8}
-.line{width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--rose),transparent);opacity:0;transition:opacity 1s ease}
-body.activated .line{opacity:.5}
-.heart-main{position:relative;width:200px;height:200px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.heart-svg{width:100%;height:100%;transition:filter .8s ease;filter:drop-shadow(0 0 4px rgba(140,0,20,.5))}
-.heart-main.active .heart-svg{filter:drop-shadow(0 0 40px rgba(232,65,90,.95)) drop-shadow(0 0 100px rgba(232,65,90,.55));animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.08)}}
-.ripple-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(232,65,90,.3);opacity:0;transition:opacity .5s ease}
-.ripple-ring:nth-child(1){inset:-20px}.ripple-ring:nth-child(2){inset:-35px}.ripple-ring:nth-child(3){inset:-50px}
-.heart-main.active .ripple-ring{opacity:1;animation:rippleOut 2s ease-out infinite}
-.heart-main.active .ripple-ring:nth-child(2){animation-delay:.6s}
-.heart-main.active .ripple-ring:nth-child(3){animation-delay:1.2s}
-@keyframes rippleOut{0%{transform:scale(.8);opacity:.6}100%{transform:scale(1.3);opacity:0}}
-.orbit{position:absolute;inset:-60px;opacity:0;transition:opacity .8s ease}
-.orbit-3{inset:-90px}
-.heart-main.active .orbit{opacity:1;animation:spin 9s linear infinite}
-.heart-main.active .orbit-2{animation:spin 12s linear infinite reverse}
-.heart-main.active .orbit-3{animation:spin 5s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.orbit-dot{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:var(--fs,16px);filter:drop-shadow(0 0 6px rgba(232,65,90,.9))}
-.heart-main.active .orbit .orbit-dot{animation:cspin 9s linear infinite}
-.heart-main.active .orbit-2 .orbit-dot{animation:cspin 12s linear infinite reverse}
-.heart-main.active .orbit-3 .orbit-dot{animation:cspin 5s linear infinite}
-@keyframes cspin{to{transform:translateX(-50%) rotate(-360deg)}}
-.counter{position:fixed;top:2rem;right:2rem;z-index:50;background:rgba(255,255,255,.03);border:1px solid rgba(232,65,90,.15);backdrop-filter:blur(10px);border-radius:50px;padding:.5rem 1.2rem;color:var(--blush);font-size:.95rem;letter-spacing:.1em;display:flex;align-items:center;gap:.5rem;opacity:0;transition:opacity .8s ease,border-color .8s ease}
-body.activated .counter{opacity:1;border-color:rgba(232,65,90,.3)}
-.counter-num{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rose);font-weight:700;min-width:2ch;text-align:center;display:inline-block}
-.counter-num.bump{animation:numBump .3s ease}
-@keyframes numBump{0%{transform:scale(1);color:var(--rose)}40%{transform:scale(1.8);color:#fff}100%{transform:scale(1);color:var(--rose)}}
-.burst{position:fixed;pointer-events:none;z-index:200;transform:translate(-50%,-50%);animation:burstFly var(--dur,.9s) cubic-bezier(.2,.8,.4,1) forwards}
-@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:1}50%{opacity:1}100%{transform:translate(calc(-50% + var(--tx,0px)),calc(-50% + var(--ty,-120px))) scale(.5) rotate(var(--rot,20deg));opacity:0}}
-.shockwave{position:fixed;pointer-events:none;z-index:150;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);animation:shockwaveAnim var(--sdur,.7s) ease-out forwards}
-@keyframes shockwaveAnim{0%{box-shadow:0 0 0 0 var(--sc,rgba(232,65,90,.9));opacity:1;transform:translate(-50%,-50%) scale(1)}100%{box-shadow:0 0 0 200px transparent;opacity:0;transform:translate(-50%,-50%) scale(1)}}
-.love-word{position:fixed;pointer-events:none;z-index:200;font-family:'Playfair Display',serif;font-style:italic;color:var(--blush);text-shadow:0 0 20px rgba(232,65,90,.9);white-space:nowrap;transform:translate(-50%,-50%);animation:wordFloat 1.5s ease-out forwards}
-@keyframes wordFloat{0%{transform:translate(-50%,-50%) scale(.4) rotate(var(--r,0deg));opacity:0}20%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(var(--r,0deg))}100%{transform:translate(-50%,calc(-50% - 130px)) scale(.85) rotate(var(--r,0deg));opacity:0}}
-.confetti{position:fixed;pointer-events:none;z-index:180;background:var(--c,#e8415a);border-radius:var(--br,2px);animation:confettiFall var(--dur,1.3s) ease-in forwards}
-@keyframes confettiFall{0%{transform:translate(0,0) rotate(0) scale(1);opacity:1}100%{transform:translate(var(--tx,0px),var(--ty,250px)) rotate(var(--rot,360deg)) scale(.3);opacity:0}}
-.vignette-flash{position:fixed;inset:0;z-index:50;pointer-events:none;background:radial-gradient(ellipse at center,transparent 30%,rgba(232,65,90,.55) 100%);opacity:0;animation:vigAnim .55s ease forwards}
-@keyframes vigAnim{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
-.milestone{position:fixed;top:50%;left:50%;z-index:300;pointer-events:none;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.5rem,4vw,2.6rem);white-space:nowrap;color:#fff;text-shadow:0 0 40px rgba(232,65,90,1),0 0 80px rgba(232,65,90,.6);animation:milestoneAnim 2.2s ease forwards;transform:translate(-50%,-50%)}
-@keyframes milestoneAnim{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}20%{transform:translate(-50%,-50%) scale(1.2);opacity:1}55%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-90px) scale(.75);opacity:0}}
-.sparkle{position:fixed;pointer-events:none;z-index:190;font-size:var(--fs,14px);transform:translate(-50%,-50%);animation:sparklePop var(--dur,.6s) ease forwards}
-@keyframes sparklePop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-50%) scale(0);opacity:0}}
-.hearts-row{display:flex;gap:1.5rem;align-items:center}
-.small-heart{font-size:1.6rem;filter:grayscale(1) brightness(.3);transition:filter .8s ease,transform .2s}
-body.activated .small-heart{filter:grayscale(0) brightness(1) drop-shadow(0 0 8px rgba(232,65,90,.7));animation:smallPulse calc(1.5s + var(--i,0) * .3s) ease-in-out infinite}
-.small-heart:hover{transform:scale(1.4) rotate(-10deg)}
-@keyframes smallPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
-.hint{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(244,165,181,.3);font-style:italic;font-size:.85rem;letter-spacing:.2em;text-align:center;white-space:nowrap;animation:breathe 3s ease-in-out infinite}
-@keyframes breathe{0%,100%{opacity:.3}50%{opacity:.7}}
+:root{--rose:#e8415a;--blush:#f4a5b5;--gold:#d4a57a;--cream:#fff5f7}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Cormorant Garamond',serif;touch-action:manipulation}
 
-/* Comfort card — main message pop */
-.comfort-card {
-  position: fixed;
-  bottom: 5rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(30px);
-  z-index: 250;
-  background: rgba(20,0,10,0.85);
-  border: 1px solid rgba(232,65,90,0.35);
-  backdrop-filter: blur(16px);
-  border-radius: 18px;
-  padding: 1.1rem 1.8rem;
-  max-width: min(420px, 88vw);
-  text-align: center;
-  pointer-events: none;
-  opacity: 0;
-  animation: cardIn 3.5s ease forwards;
+/* GPU-composited layers only — no repaints */
+#bgCanvas{position:fixed;inset:0;z-index:0;will-change:opacity;opacity:0;transition:opacity 1s ease}
+body.activated #bgCanvas{opacity:1}
+
+.stage{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;gap:1.8rem;padding:2rem 1rem;will-change:transform}
+
+/* Title */
+.title{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.7rem,7vw,3rem);text-align:center;
+  letter-spacing:.04em;line-height:1.25;
+  color:rgba(255,245,247,.85);
+  will-change:transform,opacity;
+  animation:fadeInDown .9s ease both;
 }
-.comfort-card .card-msg {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: #fff;
-  line-height: 1.55;
-  text-shadow: 0 0 20px rgba(232,65,90,0.6);
+body.activated .title{
+  background:linear-gradient(90deg,var(--blush),var(--gold),var(--blush));
+  background-size:200%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:fadeInDown .9s ease both,shimmer 3s linear infinite;
 }
-.comfort-card .card-sub {
-  margin-top: 0.4rem;
-  font-size: 0.8rem;
-  color: rgba(244,165,181,0.6);
-  letter-spacing: 0.12em;
-  font-style: italic;
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+
+/* Divider */
+.line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--rose),transparent);opacity:0;transition:opacity .8s ease}
+body.activated .line{opacity:.45}
+
+/* Heart */
+.heart-wrap{position:relative;width:180px;height:180px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+
+/* Ripples — CSS only, 3 elements max */
+.ripple{position:absolute;border-radius:50%;border:1.5px solid rgba(232,65,90,.35);opacity:0;pointer-events:none}
+.ripple:nth-child(1){inset:-16px}.ripple:nth-child(2){inset:-30px}.ripple:nth-child(3){inset:-44px}
+.heart-wrap.active .ripple{animation:rippleOut 2.2s ease-out infinite}
+.heart-wrap.active .ripple:nth-child(2){animation-delay:.7s}
+.heart-wrap.active .ripple:nth-child(3){animation-delay:1.4s}
+@keyframes rippleOut{0%{transform:scale(.85);opacity:.55}100%{transform:scale(1.35);opacity:0}}
+
+/* SVG heart */
+.heart-svg{width:100%;height:100%;will-change:transform,filter;transition:filter .7s ease}
+.heart-wrap.active .heart-svg{filter:drop-shadow(0 0 22px rgba(232,65,90,.9));animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}18%{transform:scale(1.13)}35%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+/* Subtitle */
+.subtitle{font-size:clamp(.85rem,3.5vw,1.1rem);font-style:italic;color:var(--blush);text-align:center;letter-spacing:.12em;opacity:0;transition:opacity .9s ease;padding:0 1rem}
+body.activated .subtitle{opacity:.75}
+
+/* Small hearts row */
+.hearts-row{display:flex;gap:1.2rem;align-items:center}
+.sh{font-size:1.5rem;display:inline-block;filter:grayscale(1) brightness(.3);transition:filter .8s ease}
+body.activated .sh{filter:none;animation:shPulse calc(1.6s + var(--i,0) * .25s) ease-in-out infinite}
+@keyframes shPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+
+/* Counter */
+.counter{
+  position:fixed;top:1.2rem;right:1.2rem;z-index:50;
+  background:rgba(10,0,5,.7);
+  border:1px solid rgba(232,65,90,.2);
+  border-radius:50px;padding:.4rem 1rem;
+  color:var(--blush);font-size:.9rem;letter-spacing:.08em;
+  display:flex;align-items:center;gap:.4rem;
+  opacity:0;transition:opacity .7s ease;
 }
-@keyframes cardIn {
-  0%   { opacity:0; transform:translateX(-50%) translateY(30px) scale(0.9); }
-  15%  { opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
-  70%  { opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
-  100% { opacity:0; transform:translateX(-50%) translateY(-20px) scale(0.95); }
+body.activated .counter{opacity:1}
+.counter-num{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--rose);font-weight:700;min-width:1.5ch;text-align:center;display:inline-block;transition:transform .15s}
+.counter-num.bump{animation:numBump .28s ease}
+@keyframes numBump{0%{transform:scale(1)}45%{transform:scale(1.7);color:#fff}100%{transform:scale(1)}}
+
+/* Hint */
+.hint{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);color:rgba(244,165,181,.3);font-style:italic;font-size:.8rem;letter-spacing:.18em;text-align:center;white-space:nowrap;animation:breathe 3s ease-in-out infinite;pointer-events:none}
+@keyframes breathe{0%,100%{opacity:.3}50%{opacity:.65}}
+
+/* Comfort card — NO backdrop-filter for perf */
+.card{
+  position:fixed;bottom:4.5rem;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  z-index:200;width:min(400px,90vw);
+  background:rgba(18,0,8,.92);
+  border:1px solid rgba(232,65,90,.28);
+  border-radius:16px;padding:1rem 1.4rem;
+  text-align:center;pointer-events:none;
+  opacity:0;animation:cardIn 3.8s ease forwards;
+  will-change:opacity,transform;
 }
+.card-msg{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.95rem,4vw,1.15rem);color:#fff;line-height:1.5}
+.card-sub{margin-top:.35rem;font-size:.78rem;color:rgba(244,165,181,.55);letter-spacing:.1em}
+@keyframes cardIn{
+  0%  {opacity:0;transform:translateX(-50%) translateY(20px)}
+  12% {opacity:1;transform:translateX(-50%) translateY(0)}
+  72% {opacity:1;transform:translateX(-50%) translateY(0)}
+  100%{opacity:0;transform:translateX(-50%) translateY(-16px)}
+}
+
+/* Milestone */
+.milestone{
+  position:fixed;top:50%;left:50%;z-index:300;pointer-events:none;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.3rem,5vw,2.2rem);white-space:nowrap;
+  color:#fff;text-shadow:0 0 30px rgba(232,65,90,1);
+  animation:mileAnim 2s ease forwards;
+  transform:translate(-50%,-50%);
+}
+@keyframes mileAnim{
+  0%  {transform:translate(-50%,-50%) scale(.25);opacity:0}
+  22% {transform:translate(-50%,-50%) scale(1.1);opacity:1}
+  60% {transform:translate(-50%,-50%) scale(1);opacity:1}
+  100%{transform:translate(-50%,-70px) scale(.7);opacity:0}
+}
+
+/* Vignette flash — simple opacity toggle */
+#vignette{position:fixed;inset:0;z-index:30;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(200,30,60,.45) 100%);opacity:0;transition:opacity .08s linear}
+#vignette.flash{opacity:1}
 </style>
 </head>
 <body>
-<div class="bg-mesh"></div>
-<div class="particles" id="particles"></div>
-<div class="cursor" id="cursor">·</div>
-<div class="counter">❤️ <span class="counter-num" id="counterNum">0</span> lời an ủi</div>
-<div class="stage" id="stage">
-  <h1 class="title">Chuyện Mục<br>An Ủi Ly</h1>
+
+<!-- BG drawn on canvas (gradient, no DOM overhead) -->
+<canvas id="bgCanvas"></canvas>
+<!-- Particle + burst canvas overlay -->
+<canvas id="fxCanvas" style="position:fixed;inset:0;z-index:5;pointer-events:none"></canvas>
+
+<div id="vignette"></div>
+
+<div class="counter">&#x2665; <span class="counter-num" id="cNum">0</span> lời an ủi</div>
+
+<div class="stage">
+  <h1 class="title" id="title">Chuyên Mục<br>An Ủi Ly</h1>
   <div class="line"></div>
-  <div class="heart-main" id="mainHeart">
-    <div class="ripple-ring"></div><div class="ripple-ring"></div><div class="ripple-ring"></div>
-    <div class="orbit"><div class="orbit-dot" style="--fs:18px">💕</div></div>
-    <div class="orbit orbit-2"><div class="orbit-dot" style="--fs:13px">✨</div></div>
-    <div class="orbit orbit-3"><div class="orbit-dot" style="--fs:10px">🌸</div></div>
+
+  <div class="heart-wrap" id="heart">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+
     <svg class="heart-svg" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="hg-off" cx="50%" cy="35%" r="65%">
-          <stop offset="0%" stop-color="#b0102a"/><stop offset="55%" stop-color="#6e0010"/><stop offset="100%" stop-color="#2a0006"/>
+        <radialGradient id="g0" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#a00e26"/>
+          <stop offset="55%" stop-color="#5e000e"/>
+          <stop offset="100%" stop-color="#200005"/>
         </radialGradient>
-        <radialGradient id="hg-on" cx="50%" cy="35%" r="65%">
-          <stop offset="0%" stop-color="#ff8fa3"/><stop offset="45%" stop-color="#e8415a"/><stop offset="100%" stop-color="#7b1535"/>
+        <radialGradient id="g1" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#ff8fa3"/>
+          <stop offset="45%" stop-color="#e8415a"/>
+          <stop offset="100%" stop-color="#7b1535"/>
         </radialGradient>
-        <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feComposite in="SourceGraphic" in2="blur" operator="over"/></filter>
       </defs>
-      <path id="heartOff" d="M50 85 C20 65,2 50,2 30 C2 14,14 5,25 5 C35 5,44 12,50 20 C56 12,65 5,75 5 C86 5,98 14,98 30 C98 50,80 65,50 85Z" fill="url(#hg-off)" style="transition:opacity .8s ease;" opacity="1"/>
-      <path id="heartOn" d="M50 85 C20 65,2 50,2 30 C2 14,14 5,25 5 C35 5,44 12,50 20 C56 12,65 5,75 5 C86 5,98 14,98 30 C98 50,80 65,50 85Z" fill="url(#hg-on)" filter="url(#glow)" style="transition:opacity .8s ease;" opacity="0"/>
-      <ellipse cx="34" cy="25" rx="10" ry="7" fill="rgba(255,255,255,0.07)" transform="rotate(-25,34,25)" id="hl" style="transition:fill .8s ease;"/>
+      <path id="hp0" d="M50 85 C20 65,2 50,2 30 C2 14,14 5,25 5 C35 5,44 12,50 20 C56 12,65 5,75 5 C86 5,98 14,98 30 C98 50,80 65,50 85Z" fill="url(#g0)" style="transition:opacity .7s"/>
+      <path id="hp1" d="M50 85 C20 65,2 50,2 30 C2 14,14 5,25 5 C35 5,44 12,50 20 C56 12,65 5,75 5 C86 5,98 14,98 30 C98 50,80 65,50 85Z" fill="url(#g1)" opacity="0" style="transition:opacity .7s"/>
+      <ellipse id="hl" cx="34" cy="25" rx="10" ry="7" fill="rgba(255,255,255,.06)" transform="rotate(-25,34,25)" style="transition:fill .7s"/>
     </svg>
   </div>
+
   <p class="subtitle">— nhấn vào trái tim khi bạn cần được an ủi —</p>
+
   <div class="hearts-row">
-    <span class="small-heart" style="--i:0">🤍</span>
-    <span class="small-heart" style="--i:1">💗</span>
-    <span class="small-heart" style="--i:2">❤️</span>
-    <span class="small-heart" style="--i:3">💗</span>
-    <span class="small-heart" style="--i:4">🤍</span>
+    <span class="sh" style="--i:0">🤍</span>
+    <span class="sh" style="--i:1">💗</span>
+    <span class="sh" style="--i:2">❤️</span>
+    <span class="sh" style="--i:3">💗</span>
+    <span class="sh" style="--i:4">🤍</span>
   </div>
+
   <div class="line"></div>
 </div>
-<p class="hint">chạm vào trái tim · mỗi lần nhấn là một lời an ủi dành cho bạn</p>
+
+<p class="hint">chạm vào trái tim · mỗi lần nhấn là một lời an ủi</p>
+
 <script>
-const cursor=document.getElementById('cursor'),mainHeart=document.getElementById('mainHeart'),counterNum=document.getElementById('counterNum'),heartOff=document.getElementById('heartOff'),heartOn=document.getElementById('heartOn'),hl=document.getElementById('hl'),stage=document.getElementById('stage'),pContainer=document.getElementById('particles');
-const icons=['❤️','💕','💗','💖','🌸','✨','🌹','💝','💞'];
-const burstIcons=['💖','💕','❤️','💗','🌸','✨','💝','🌹','💞','⭐','🌟','🎠'];
-const loveWords=['Bạn ổn thôi','Cứ khóc đi','Mình ở đây','Không sao đâu','Bạn đủ tốt rồi','Thở sâu nào','Ngủ ngon nhé','Mình hiểu bạn','Cố lên nào','Bạn mạnh lắm','Đừng lo nha','Bình tĩnh thôi','Bạn không đơn độc','Ngày mai tốt hơn'];
-const milestones={5:'🌸 Bạn không cô đơn đâu 🌸',10:'✨ Cứ để cảm xúc chảy đi ✨',20:'💛 Bạn đủ mạnh để vượt qua 💛',30:'🌙 Ngày mai trời lại sáng 🌙',50:'⭐ Bạn thật dũng cảm rồi đó ⭐',99:'🌟 Mình tự hào về bạn lắm 🌟'};
-const confettiColors=['#e8415a','#f4a5b5','#d4a57a','#fff5f7','#ff6b8a','#ffb3c6','#ffd700','#ff85a1'];
-const sparkleIcons=['✨','⭐','💫','🌟'];
+// ── DOM refs ──────────────────────────────────────────
+const heart   = document.getElementById('heart');
+const hp0     = document.getElementById('hp0');
+const hp1     = document.getElementById('hp1');
+const hl      = document.getElementById('hl');
+const cNum    = document.getElementById('cNum');
+const vignette= document.getElementById('vignette');
+const bgCanvas= document.getElementById('bgCanvas');
+const fxCanvas= document.getElementById('fxCanvas');
+const bgCtx   = bgCanvas.getContext('2d');
+const fx      = fxCanvas.getContext('2d');
 
-document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
-
-function spawnParticle(){const p=document.createElement('div');p.className='particle';p.textContent=icons[Math.floor(Math.random()*icons.length)];p.style.setProperty('--x',Math.random()*100+'vw');p.style.setProperty('--dur',(5+Math.random()*8)+'s');p.style.setProperty('--delay',(Math.random()*4)+'s');p.style.fontSize=(10+Math.random()*18)+'px';pContainer.appendChild(p);setTimeout(()=>p.remove(),18000)}
-for(let i=0;i<20;i++)setTimeout(spawnParticle,i*400);
-setInterval(spawnParticle,700);
-
-mainHeart.addEventListener('mouseenter',()=>{document.body.classList.add('activated');mainHeart.classList.add('active');heartOff.style.opacity='0';heartOn.style.opacity='1';hl.style.fill='rgba(255,255,255,0.2)';cursor.textContent='❤️';cursor.style.color=''});
-mainHeart.addEventListener('mouseleave',()=>{document.body.classList.remove('activated');mainHeart.classList.remove('active');heartOff.style.opacity='1';heartOn.style.opacity='0';hl.style.fill='rgba(255,255,255,0.07)';cursor.textContent='·';cursor.style.color='rgba(255,255,255,0.4)'});
-
-let count=0;
-mainHeart.addEventListener('click',e=>{
-  count++;const cx=e.clientX,cy=e.clientY;
-  counterNum.textContent=count;counterNum.classList.remove('bump');void counterNum.offsetWidth;counterNum.classList.add('bump');
-  showComfortCard(cx, cy);
-
-  const vf=document.createElement('div');vf.className='vignette-flash';document.body.appendChild(vf);setTimeout(()=>vf.remove(),650);
-
-  stage.classList.remove('shake');void stage.offsetWidth;stage.classList.add('shake');setTimeout(()=>stage.classList.remove('shake'),500);
-
-  ['rgba(232,65,90,0.9)','rgba(244,165,181,0.6)','rgba(212,165,122,0.35)'].forEach((c,r)=>{
-    setTimeout(()=>{const sw=document.createElement('div');sw.className='shockwave';sw.style.left=cx+'px';sw.style.top=cy+'px';sw.style.setProperty('--sc',c);sw.style.setProperty('--sdur',(0.55+r*0.12)+'s');document.body.appendChild(sw);setTimeout(()=>sw.remove(),900)},r*90)
+// ── Resize canvases ───────────────────────────────────
+function resize(){
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  [bgCanvas,fxCanvas].forEach(c=>{
+    c.width  = window.innerWidth  * dpr;
+    c.height = window.innerHeight * dpr;
+    c.style.width  = window.innerWidth  + 'px';
+    c.style.height = window.innerHeight + 'px';
+    c.getContext('2d').scale(dpr,dpr);
   });
+  drawBG();
+}
+window.addEventListener('resize', resize);
 
-  const nb=Math.min(12+Math.floor(count/3),28);
-  for(let i=0;i<nb;i++){setTimeout(()=>{const b=document.createElement('div');b.className='burst';b.textContent=burstIcons[Math.floor(Math.random()*burstIcons.length)];const angle=(i/nb)*Math.PI*2+Math.random()*.4,dist=70+Math.random()*140;b.style.left=cx+'px';b.style.top=cy+'px';b.style.setProperty('--tx',(Math.cos(angle)*dist)+'px');b.style.setProperty('--ty',(Math.sin(angle)*dist-50)+'px');b.style.setProperty('--rot',(Math.random()*60-30)+'deg');b.style.setProperty('--dur',(0.7+Math.random()*.5)+'s');b.style.fontSize=(18+Math.random()*24)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),1500)},i*28)}
+function drawBG(){
+  const w=window.innerWidth, h=window.innerHeight;
+  bgCtx.clearRect(0,0,w,h);
+  // Base dark
+  bgCtx.fillStyle='#0d0208';
+  bgCtx.fillRect(0,0,w,h);
+  // Radial glow 1
+  const g1=bgCtx.createRadialGradient(w*.2,h*.4,0,w*.2,h*.4,w*.6);
+  g1.addColorStop(0,'rgba(123,21,53,0.38)');g1.addColorStop(1,'transparent');
+  bgCtx.fillStyle=g1;bgCtx.fillRect(0,0,w,h);
+  // Radial glow 2
+  const g2=bgCtx.createRadialGradient(w*.8,h*.6,0,w*.8,h*.6,w*.5);
+  g2.addColorStop(0,'rgba(232,65,90,0.18)');g2.addColorStop(1,'transparent');
+  bgCtx.fillStyle=g2;bgCtx.fillRect(0,0,w,h);
+}
+resize();
 
-  for(let i=0;i<25;i++){setTimeout(()=>{const c=document.createElement('div');c.className='confetti';c.style.left=(cx+(Math.random()-.5)*100)+'px';c.style.top=cy+'px';c.style.setProperty('--c',confettiColors[Math.floor(Math.random()*confettiColors.length)]);c.style.setProperty('--tx',(Math.random()-.5)*240+'px');c.style.setProperty('--ty',(120+Math.random()*280)+'px');c.style.setProperty('--rot',(Math.random()*720-360)+'deg');c.style.setProperty('--dur',(0.9+Math.random()*.8)+'s');c.style.setProperty('--br',Math.random()>.5?'50%':'2px');c.style.width=(5+Math.random()*9)+'px';c.style.height=(4+Math.random()*9)+'px';document.body.appendChild(c);setTimeout(()=>c.remove(),2000)},i*35)}
+// ── Particle system (Canvas) ──────────────────────────
+const EMOJIS=['❤️','💕','💗','🌸','✨','💝','🌟'];
+const particles=[];
+const MAX_PARTICLES = 18; // strict cap for mobile
 
-  const wEl=document.createElement('div');wEl.className='love-word';wEl.textContent=loveWords[Math.floor(Math.random()*loveWords.length)];wEl.style.left=(cx+(Math.random()-.5)*140)+'px';wEl.style.top=(cy-10)+'px';wEl.style.setProperty('--r',(Math.random()*16-8)+'deg');wEl.style.fontSize=(1+Math.random()*.5)+'rem';document.body.appendChild(wEl);setTimeout(()=>wEl.remove(),1700);
-
-  for(let i=0;i<8;i++){setTimeout(()=>{const sp=document.createElement('div');sp.className='sparkle';sp.textContent=sparkleIcons[Math.floor(Math.random()*sparkleIcons.length)];const a=(i/8)*Math.PI*2;sp.style.left=(cx+Math.cos(a)*55)+'px';sp.style.top=(cy+Math.sin(a)*55)+'px';sp.style.setProperty('--fs',(12+Math.random()*10)+'px');sp.style.setProperty('--dur',(0.4+Math.random()*.3)+'s');document.body.appendChild(sp);setTimeout(()=>sp.remove(),900)},60+i*30)}
-
-  if(milestones[count]){const m=document.createElement('div');m.className='milestone';m.textContent=milestones[count];document.body.appendChild(m);setTimeout(()=>m.remove(),2500)}
-
-  if(count%10===0){for(let i=0;i<35;i++){setTimeout(()=>{const b=document.createElement('div');b.className='burst';b.textContent=['🎉','🎊','💫','⭐','✨','🌟','🎠','👑'][Math.floor(Math.random()*8)];const angle=(i/35)*Math.PI*2,dist=130+Math.random()*120;b.style.left=cx+'px';b.style.top=cy+'px';b.style.setProperty('--tx',(Math.cos(angle)*dist)+'px');b.style.setProperty('--ty',(Math.sin(angle)*dist-70)+'px');b.style.setProperty('--rot',(Math.random()*80-40)+'deg');b.style.setProperty('--dur',(1+Math.random()*.5)+'s');b.style.fontSize=(24+Math.random()*20)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),1800)},80+i*20)}}
-});
-
-const comfortMessages = [
-  { msg: "Bạn không cần phải ổn ngay lúc này.", sub: "Cứ để cảm xúc được nghỉ ngơi nhé." },
-  { msg: "Khóc không phải là yếu đuối — đó là dũng cảm.", sub: "Bạn đang rất can đảm rồi đó." },
-  { msg: "Hôm nay khó khăn không có nghĩa là ngày mai cũng vậy.", sub: "Mọi thứ rồi sẽ qua đi thôi." },
-  { msg: "Bạn đã làm hết sức rồi — thế là đủ.", sub: "Đừng tự trách bản thân nữa nhé." },
-  { msg: "Mình ở đây, ngay bên cạnh bạn.", sub: "Bạn không đơn độc đâu." },
-  { msg: "Không ai hoàn hảo cả — kể cả ngày hôm nay.", sub: "Ngày mai bạn lại thử lại được mà." },
-  { msg: "Cơ thể bạn đang làm việc rất chăm chỉ để chữa lành.", sub: "Hãy cho nó thêm chút thời gian nhé." },
-  { msg: "Thở sâu một cái đi — bạn làm được mà.", sub: "Từng nhịp thở là một bước nhỏ về phía trước." },
-  { msg: "Cảm xúc của bạn là có thật và xứng đáng được lắng nghe.", sub: "Mình tin vào điều bạn đang cảm thấy." },
-  { msg: "Bạn đã vượt qua được những ngày khó hơn thế này.", sub: "Và bạn sẽ vượt qua được lần này nữa." },
-  { msg: "Đừng so sánh nỗi đau của bạn với người khác.", sub: "Nỗi đau của bạn là thật và đáng được quan tâm." },
-  { msg: "Nghỉ ngơi cũng là một dạng tiến về phía trước.", sub: "Không cần mạnh mẽ mọi lúc đâu bạn ơi." },
-  { msg: "Bạn xứng đáng được yêu thương — kể cả từ chính mình.", sub: "Hãy nhẹ nhàng với bản thân một chút nhé." },
-  { msg: "Mọi thứ đang rất nặng nề — mình hiểu.", sub: "Nhưng bạn không phải gánh một mình đâu." },
-  { msg: "Có những ngày chỉ cần tồn tại thôi là đã đủ dũng cảm rồi.", sub: "Hôm nay bạn đã làm được điều đó." },
-  { msg: "Bạn quan trọng hơn bạn nghĩ rất nhiều.", sub: "Sự có mặt của bạn tạo ra sự khác biệt." },
-  { msg: "Dù mọi thứ bây giờ mờ mịt — ánh sáng vẫn ở đâu đó phía trước.", sub: "Cứ bước từng bước nhỏ thôi nhé." },
-  { msg: "Bạn không cần phải giải thích nỗi buồn của mình cho ai.", sub: "Cảm xúc không cần lý do mới được tồn tại." },
-];
-
-let lastCardIdx = -1;
-function showComfortCard(cx, cy) {
-  // Pick a different message than last time
-  let idx;
-  do { idx = Math.floor(Math.random() * comfortMessages.length); } while (idx === lastCardIdx);
-  lastCardIdx = idx;
-  const { msg, sub } = comfortMessages[idx];
-
-  const card = document.createElement('div');
-  card.className = 'comfort-card';
-  card.innerHTML = '<div class="card-msg">' + msg + '</div><div class="card-sub">' + sub + '</div>';
-  document.body.appendChild(card);
-  setTimeout(() => card.remove(), 3800);
+function addParticle(){
+  if(particles.length>=MAX_PARTICLES) return;
+  particles.push({
+    x: Math.random()*window.innerWidth,
+    y: window.innerHeight + 20,
+    e: EMOJIS[Math.random()*EMOJIS.length|0],
+    s: .6+Math.random()*.8,     // scale
+    vy:-(1.2+Math.random()*1.4),// speed
+    vx:(Math.random()-.5)*.4,
+    op:0, life:0,
+    maxLife: 180+Math.random()*120
+  });
 }
 
+// Burst particles (from click)
+const bursts=[];
+function addBurst(cx,cy,count){
+  for(let i=0;i<count;i++){
+    const a=(i/count)*Math.PI*2+Math.random()*.5;
+    const sp=2.5+Math.random()*3.5;
+    bursts.push({
+      x:cx, y:cy,
+      vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-2,
+      e:EMOJIS[Math.random()*EMOJIS.length|0],
+      s:.6+Math.random()*.7,
+      op:1, life:0, maxLife:45+Math.random()*20
+    });
+  }
+}
+
+// Confetti particles
+const confetti=[];
+const CONF_COLORS=['#e8415a','#f4a5b5','#d4a57a','#ffb3c6','#ffd700','#ff85a1'];
+function addConfetti(cx,cy,count){
+  for(let i=0;i<count;i++){
+    confetti.push({
+      x:cx+(Math.random()-.5)*60,
+      y:cy,
+      vx:(Math.random()-.5)*3,
+      vy:-(1+Math.random()*3),
+      w:4+Math.random()*6, h:3+Math.random()*5,
+      color:CONF_COLORS[Math.random()*CONF_COLORS.length|0],
+      rot:Math.random()*360, vrot:(Math.random()-.5)*8,
+      op:1, life:0, maxLife:50+Math.random()*30
+    });
+  }
+}
+
+// Shockwave rings (canvas)
+const waves=[];
+function addWave(cx,cy){
+  waves.push({x:cx,y:cy,r:10,maxR:160,op:0.8,speed:6});
+  setTimeout(()=>waves.push({x:cx,y:cy,r:10,maxR:120,op:0.5,speed:4,color:'rgba(244,165,181,'}),100);
+}
+
+let activated=false;
+let particleTimer=0;
+let raf;
+
+function loop(){
+  const w=window.innerWidth, h=window.innerHeight;
+  fx.clearRect(0,0,w,h);
+
+  // Ambient particles
+  particleTimer++;
+  if(activated && particleTimer%50===0) addParticle();
+
+  // Draw & update ambient particles
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.life++;
+    if(p.life>p.maxLife){particles.splice(i,1);continue;}
+    p.x+=p.vx; p.y+=p.vy;
+    p.op = p.life<20 ? p.life/20 : p.life>p.maxLife-30 ? (p.maxLife-p.life)/30 : 0.55;
+    const sc = p.s*(10+4*Math.sin(p.life*.05));
+    fx.globalAlpha=p.op*0.7;
+    fx.font=`${sc}px serif`;
+    fx.fillText(p.e, p.x, p.y);
+  }
+
+  // Draw & update burst particles
+  for(let i=bursts.length-1;i>=0;i--){
+    const b=bursts[i];
+    b.life++;
+    if(b.life>b.maxLife){bursts.splice(i,1);continue;}
+    b.x+=b.vx; b.y+=b.vy; b.vy+=0.12; // gravity
+    b.op=1-b.life/b.maxLife;
+    const sc=b.s*(10+4*(1-b.life/b.maxLife));
+    fx.globalAlpha=b.op;
+    fx.font=`${sc}px serif`;
+    fx.fillText(b.e,b.x,b.y);
+  }
+
+  // Draw & update confetti
+  for(let i=confetti.length-1;i>=0;i--){
+    const c=confetti[i];
+    c.life++;
+    if(c.life>c.maxLife){confetti.splice(i,1);continue;}
+    c.x+=c.vx; c.y+=c.vy; c.vy+=0.15; c.rot+=c.vrot;
+    c.op=1-c.life/c.maxLife;
+    fx.globalAlpha=c.op;
+    fx.save();
+    fx.translate(c.x,c.y);
+    fx.rotate(c.rot*Math.PI/180);
+    fx.fillStyle=c.color;
+    fx.fillRect(-c.w/2,-c.h/2,c.w,c.h);
+    fx.restore();
+  }
+
+  // Draw shockwaves
+  for(let i=waves.length-1;i>=0;i--){
+    const w2=waves[i];
+    w2.r+=w2.speed; w2.op-=0.04;
+    if(w2.op<=0){waves.splice(i,1);continue;}
+    fx.globalAlpha=w2.op;
+    fx.beginPath();
+    fx.arc(w2.x,w2.y,w2.r,0,Math.PI*2);
+    const col=w2.color||'rgba(232,65,90,';
+    fx.strokeStyle=col+w2.op+')';
+    fx.lineWidth=2;
+    fx.stroke();
+  }
+
+  fx.globalAlpha=1;
+  raf=requestAnimationFrame(loop);
+}
+loop();
+
+// ── Hover / touch activate ────────────────────────────
+function activate(){
+  if(activated) return;
+  activated=true;
+  document.body.classList.add('activated');
+  heart.classList.add('active');
+  hp0.style.opacity='0'; hp1.style.opacity='1';
+  hl.style.fill='rgba(255,255,255,.18)';
+}
+function deactivate(){
+  activated=false;
+  document.body.classList.remove('activated');
+  heart.classList.remove('active');
+  hp0.style.opacity='1'; hp1.style.opacity='0';
+  hl.style.fill='rgba(255,255,255,.06)';
+}
+
+heart.addEventListener('mouseenter', activate);
+heart.addEventListener('mouseleave', deactivate);
+// Mobile: activate on touchstart, keep active while touching
+heart.addEventListener('touchstart', e=>{ e.preventDefault(); activate(); }, {passive:false});
+heart.addEventListener('touchend',   e=>{ e.preventDefault(); handleClick(e.changedTouches[0]); }, {passive:false});
+
+// ── Click handler ─────────────────────────────────────
+const comfortMessages=[
+  {msg:"Bạn không cần phải ổn ngay lúc này.",       sub:"Cứ để cảm xúc được nghỉ ngơi nhé."},
+  {msg:"Khóc không phải là yếu đuối — đó là dũng cảm.", sub:"Bạn đang rất can đảm rồi đó."},
+  {msg:"Hôm nay khó khăn không có nghĩa là ngày mai cũng vậy.", sub:"Mọi thứ rồi sẽ qua đi thôi."},
+  {msg:"Bạn đã làm hết sức rồi — thế là đủ.",       sub:"Đừng tự trách bản thân nữa nhé."},
+  {msg:"Mình ở đây, ngay bên cạnh bạn.",             sub:"Bạn không đơn độc đâu."},
+  {msg:"Không ai hoàn hảo — kể cả ngày hôm nay.",   sub:"Ngày mai bạn lại thử lại được mà."},
+  {msg:"Thở sâu một cái đi — bạn làm được mà.",     sub:"Từng nhịp thở là một bước nhỏ về phía trước."},
+  {msg:"Cảm xúc của bạn xứng đáng được lắng nghe.", sub:"Mình tin vào điều bạn đang cảm thấy."},
+  {msg:"Bạn đã vượt qua những ngày khó hơn thế này.", sub:"Và bạn sẽ vượt qua được lần này nữa."},
+  {msg:"Đừng so sánh nỗi đau của bạn với người khác.", sub:"Nỗi đau của bạn là thật và đáng được quan tâm."},
+  {msg:"Nghỉ ngơi cũng là một dạng tiến về phía trước.", sub:"Không cần mạnh mẽ mọi lúc đâu bạn ơi."},
+  {msg:"Bạn xứng đáng được yêu thương — từ chính mình.", sub:"Hãy nhẹ nhàng với bản thân một chút nhé."},
+  {msg:"Có những ngày tồn tại thôi là đủ dũng cảm rồi.", sub:"Hôm nay bạn đã làm được điều đó."},
+  {msg:"Bạn quan trọng hơn bạn nghĩ rất nhiều.",    sub:"Sự có mặt của bạn tạo ra sự khác biệt."},
+  {msg:"Ánh sáng vẫn ở đâu đó phía trước.",         sub:"Cứ bước từng bước nhỏ thôi nhé."},
+  {msg:"Mọi thứ đang rất nặng nề — mình hiểu.",     sub:"Nhưng bạn không phải gánh một mình đâu."},
+  {msg:"Cơ thể bạn đang cố chữa lành từng ngày.",   sub:"Hãy cho nó thêm chút thời gian nhé."},
+  {msg:"Bạn không cần giải thích nỗi buồn cho ai.", sub:"Cảm xúc không cần lý do mới được tồn tại."},
+];
+const milestones={5:"🌸 Bạn không cô đơn đâu 🌸",10:"✨ Cứ để cảm xúc chảy đi ✨",20:"💛 Bạn đủ mạnh để vượt qua 💛",30:"🌙 Ngày mai trời lại sáng 🌙",50:"⭐ Bạn thật dũng cảm rồi đó ⭐",99:"🌟 Mình tự hào về bạn lắm 🌟"};
+
+let count=0, lastCard=-1, cardEl=null, vigTimer=null;
+
+function handleClick(touch){
+  // Get center of heart on mobile
+  const rect=heart.getBoundingClientRect();
+  const cx=touch ? touch.clientX : (rect.left+rect.right)/2;
+  const cy=touch ? touch.clientY : (rect.top+rect.bottom)/2;
+
+  count++;
+  cNum.textContent=count;
+  cNum.classList.remove('bump'); void cNum.offsetWidth; cNum.classList.add('bump');
+
+  // Vignette flash (CSS transition, no new DOM)
+  clearTimeout(vigTimer);
+  vignette.classList.add('flash');
+  vigTimer=setTimeout(()=>vignette.classList.remove('flash'),300);
+
+  // Canvas effects (no DOM spam)
+  addWave(cx,cy);
+  addBurst(cx,cy, 10); // reduced from 28
+  addConfetti(cx,cy, 12); // reduced from 25
+
+  // Comfort card (single DOM element, recycled)
+  let idx; do{idx=Math.random()*comfortMessages.length|0}while(idx===lastCard);
+  lastCard=idx;
+  const {msg,sub}=comfortMessages[idx];
+  if(cardEl){cardEl.remove();cardEl=null;}
+  cardEl=document.createElement('div');
+  cardEl.className='card';
+  cardEl.innerHTML='<div class="card-msg">'+msg+'</div><div class="card-sub">'+sub+'</div>';
+  document.body.appendChild(cardEl);
+  setTimeout(()=>{if(cardEl){cardEl.remove();cardEl=null;}},4000);
+
+  // Milestone
+  if(milestones[count]){
+    const m=document.createElement('div');
+    m.className='milestone';m.textContent=milestones[count];
+    document.body.appendChild(m);
+    setTimeout(()=>m.remove(),2200);
+  }
+
+  // Mega burst x10 — also canvas, smaller count
+  if(count%10===0) addBurst(cx,cy,20);
+}
+
+heart.addEventListener('click', e=>handleClick(null));
 </script>
 </body>
 </html>
